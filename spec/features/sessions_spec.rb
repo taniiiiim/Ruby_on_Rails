@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.feature SessionsController, type: :feature do
+=begin
+  def log_in_as(user, password: 'password', remember_me: '1')
+    post login_path, params: { session: { email: user.email,
+                                          password: password,
+                                          remember_me: remember_me } }
+  end
+=end
 
   describe "login with invalid information" do
     before do
@@ -24,7 +31,7 @@ RSpec.feature SessionsController, type: :feature do
   end
   end
 
-
+=begin
   describe  "login with valid information" do
     it 'log in' do
       visit login_path
@@ -54,6 +61,23 @@ RSpec.feature SessionsController, type: :feature do
       expect(is_logged_in?).to be_falsey 
       expect(page).to have_current_path root_path
       expect(page).to have_link "Log in", href: login_path
+
+      二番目のウィンドウでログアウトをクリックするユーザーをシミュレートする
     end
   end
+
+  test "login with remembering" do
+    log_in_as(@user, remember_me: '1')
+    assert_not_empty cookies['remember_token']
+  end
+
+  test "login without remembering" do
+    # クッキーを保存してログイン
+    #     log_in_as(@user, remember_me: '1')
+    #         delete logout_path
+    #             # クッキーを削除してログイン
+    #                 log_in_as(@user, remember_me: '0')
+    #                     assert_empty cookies['remember_token']
+    #                       end
+=end
 end
