@@ -1,0 +1,4 @@
+kogatchi:
+  name: kogatchi
+  email: koga.kazuki@lmi.ne.jp
+  password_digest: <%= User.digest('Password') %>
