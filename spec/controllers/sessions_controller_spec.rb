@@ -11,7 +11,7 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   describe "POST #create" do
-    it "returns http success" do
+    it "invalid signup" do
       get  :new
       expect(response).to render_template 'sessions/new'
       post :create,  params: { session: { email: "", password: "" } } 

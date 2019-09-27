@@ -11,4 +11,17 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe SessionsHelper, type: :helper do
+=begin
+    describe 'current user branches with right condition' do
+      before do
+        post signup_path, params: { user: { name: "Example User", email: "user@example.com", password: "password", password_confirmation: "password" } }
+        remember(User.last)
+      end
+
+      it "current_user returns right user when session is nil" do
+        expect(current_user).to eq User.last
+        expect(is_logged_in?).to be_truthy
+      end
+    end
+=end
 end
