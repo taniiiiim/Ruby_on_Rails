@@ -96,4 +96,14 @@ RSpec.describe User, type: :model do
     expect(@user.authenticated?(:remember, '')).to be_falsey
   end
 
+  it "associated microposts should be destroyed" do
+    @user = User.new(name: "Example User", email: "user@example.com",
+                     password: "foobar", password_confirmation: "foobar")
+    @user.save
+    @user.microposts.create!(content: "Lorem ipsum")
+    count = Micropost.count
+    @user.destroy
+    expect(count).not_to eq Micropost.count
+  end
+
 end
