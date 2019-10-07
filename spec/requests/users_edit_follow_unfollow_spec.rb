@@ -109,6 +109,25 @@ RSpec.describe UsersController, type: :request do
                                               admin: true } }
       expect(User.first.admin?).to be_falsey
     end
+  end
+
+  describe "follow/unfollow" do
+
+    before do
+      post signup_path, params: { user: { name:  "Example User1", email: "user1@example.com", password: "password1", password_confirmation: "password1" } }
+      post signup_path, params: { user: { name:  "Example User2", email: "user2@example.com", password: "password2", password_confirmation: "password2" } }
+      delete logout_path
+    end
+
+  it "should redirect following when not logged in" do
+    get following_user_path(User.first)
+    assert_redirected_to login_url
+  end
+
+  it "should redirect followers when not logged in" do
+    get followers_user_path(User.first)
+    assert_redirected_to login_url
+  end
 
   end
 end

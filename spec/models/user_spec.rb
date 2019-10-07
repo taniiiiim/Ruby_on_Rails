@@ -106,4 +106,51 @@ RSpec.describe User, type: :model do
     expect(count).not_to eq Micropost.count
   end
 
+  it "should follow and unfollow a user" do
+    @user1 = User.create(name: "Example User1", email: "user1@example.com",
+                     password: "foobar1", password_confirmation: "foobar1")
+    @user2 = User.create(name: "Example User2", email: "user2@example.com",
+                     password: "foobar2", password_confirmation: "foobar2")
+    expect(@user1.following?(@user2)).to be_falsey
+    @user1.follow(@user2)
+    expect(@user1.following?(@user2)).to be_truthy
+    expect(@user2.followers.include?(@user1))
+    @user1.unfollow(@user2)
+    expect(@user1.following?(@user2)).to be_falsey
+  end
+=begin
+  it "feed should have the right posts" do
+
+  include ApplicationHelper
+
+  before do
+    User.create!(name:  "Example User",
+                 email: "user@example.com",
+                 password:              "password",
+                 password_confirmation: "password",
+                 activated: true)
+    99.times do |n|
+      name  = Faker::Name.name
+      email = "example-#{n+1}@railstutorial.org"
+      password = "password"
+      User.create!(name:  name,
+                     email: email,
+                     password:              password,
+                     password_confirmation: password)
+    end
+    30.times do |n|
+      content = Faker::Lorem.sentence(5)
+      created_at = 42.days.ago
+    @user = User.first
+    @user.microposts.create!(content: content, created_at: created_at)
+    @user1 = User.second
+    @user1.microposts.create!(content: content, created_at: created_at)
+    @user2 = User.second
+    @user2.microposts.create!(content: content, created_at: created_at)
+
+    end
+  end
+
+  
+=end
 end
